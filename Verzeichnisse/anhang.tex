@@ -1,0 +1,18 @@
+\section*{Anhang}
+\addcontentsline{toc}{section}{Anhang}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+
+\subsection{Programmablaufplan\label{anhang:pap}}
+\begin{figure}[H]
+   \centering
+    \includegraphics[scale=0.5]{Bilder/Flow_Chart_Bohrvorrichtung.png}
+    \caption[gesamter Programmablaufplan]{Programmablaufplan des automatischen Bohrvorgangs (eigener Entwurf)}
+    \label{fig:Ablaufplan}
+\end{figure}
+\clearpage
+
+\includepdf[pages=1, trim=0mm 80mm 20mm 0mm, pagecommand={\subsection{PLC\_PRG}\label{anhang:Plc_prg}}]{Bilder/PLC_PRG.pdf}
+\includepdf[pages=2-3]{Bilder/PLC_PRG.pdf}
+
+%\clearpage
+

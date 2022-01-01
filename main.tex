@@ -3,11 +3,12 @@
 %-------------------------------------------
 % Vorgaben Assignment aus Studienheft SQL301
 %-------------------------------------------
-% Umfang: 8 - 10 Seiten (inkl. Abbildungen und Tabellen, aber ohne Deckblatt, % Gliederung und Literaturverzeichnis, Eidesstattliche Erklaerung)
+% Umfang: 8 - 10 Seiten (inkl. Abbildungen und Tabellen, ohne Deckblatt, Gliederung und Literaturverzeichnis, Eidesstattliche Erklaerung)
 % Zeilenabstand: 1,5, Tabellen 1,0 
 % Schriftart: frei
 % Schriftgrad: 11 oder 12 pt
 % Tabellen auch 10pt
+% Silbentrennung ok, auf "Missratene" Trennung achten!
 % Variablen, physikalische Groessen und Funktionszeichen werden kursiv gedruckt.
 % Ränder: links: 4,5 cm, rechts 2,0 cm, oben und unten jeweils 3,0 cm
 % Deckblatt: (Name, Adresse, AKAD-E-Mail-Adresse, Immatrikulationsnummer, Modulbezeichnung, Thema, Abgabedatum, Dozent)
@@ -16,7 +17,7 @@
 % Titelblatt, ohne Nummerierung
 % Inhaltsverzeichnis (ohne Nummerierung) -> Abbildungsverzeichnis (Nummerierung in Römisch, beginnend mit "III")-> Tabellenverzeichnis -> Abk.-Verzeichniss
 % Textteil, Nummerierung in arabisch, beginnen mit "1"
-% Anhang -> Literaturverzeichnis, Nummerierung in Römisch, folgend auf Textteil
+% Anhang -> Literaturverzeichnis, Nummerierung in Römisch, folgend auf Römische Nummerierung von Verzeichnissen
 
 \documentclass[listof=totoc, bibliography=totoc, a4paper, 12pt]{scrartcl}
 \usepackage[ngerman]{babel}
@@ -36,16 +37,29 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
+
+%\usepackage{graphicx}
 \usepackage{float} % Notwendig fuer figure[h]
 \usepackage[printonlyused]{acronym}
 \usepackage{multicol} % für zweispaltiges Deckblatt
-
-% Pakete für Literatur + zitieren
-\usepackage[backend=biber, style=authoryear-ibid, autocite=footnote]{biblatex}
+\usepackage{microtype}%"entspanntere" Umbrüche
+% Pakete für Literatur + zitieren, authoryear-ibid
+\usepackage[backend=biber, style=authoryear-ibid, autocite=footnote, maxnames=10, dashed=false]{biblatex} %maxnames: Maximale anzieg im Verzeichnis, danach u.a.; dashed: bei gleichen Autoren würde bei true beim zweiten Eintrag ein"-" erschienen anstelle des Autors
 \usepackage{csquotes}
+\usepackage{xpatch}
 \addbibresource{Literatur/literatur.bib}
 
+\usepackage[table]{xcolor}
+
+\usepackage{pdfpages}%Einbinden vpn pdf-Dateien
 \include{einstellungen}
+
+
+%% Für Codeblöcke mit Syntax-Highlighting
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/minted/
+%Einkommentieren fuer Minted Syntax Highlighting
+\usepackage{minted}
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
 
 % Paket für Verlinkungen im pdf-Dokument/ Einstellung für pdf-Dokument (z.B. Literaturverzeichnis, URLs, Email,...)
 \usepackage[
@@ -54,9 +68,9 @@
 pdftitle={\titel},
 pdfsubject={Assignment zum Modul REG23},
 pdfauthor={\name},
-pdfkeywords={akad, assignment, pdf, REG23, SPS, CODESYS}
+pdfkeywords={Akad, Assignment, REG23, SPS, CODESYS},
 %---------------------------------------------------------
-% pdfborderstyle={/S/U/W 1}, % Links unterstrichen
+%pdfborderstyle={/S/U/W 1}, % Links unterstrichen
 pdfborder={0 0 0},  % Links nicht sichtbar im pdf
 colorlinks = false,
 pdfpagelabels,
@@ -120,6 +134,7 @@ citecolor = black] {hyperref}
 
 % Formelverzeichnis
 %\listof{Formel}{Formelübersicht}
+\setcounter{savepage}{\value{page}} %speichert Seitenzahl für spätere folgende Römische Nummerierung
 \end{spacing} 
 
 
@@ -136,6 +151,7 @@ citecolor = black] {hyperref}
 %                     Ab hier der eigentliche Textteil
 %-------------------------------------------------------------------------------------------------------------------
 % Einleitung
+\sloppy%Leerräume dürfen gedehnt werden
 \include{Text/einleitung}
 
 % Grundlagen
@@ -146,22 +162,17 @@ citecolor = black] {hyperref}
 
 % Schluss
 \include{Text/schluss}
-
-\setcounter{savepage}{\value{page}} %speichert Seitenzahl für folgende Römische Nummerierung
-
 \end{spacing}
 
-\clearpage
-
-% ab hier Römisch
+% ab hier Römisch, folgend auf Verzeichnisse
 \pagenumbering{Roman}
 \setcounter{page}{\value{savepage}}
 
 % Anhang, bei Nichtbedarf auskommentieren
-%\input{anhang}
-%\clearpage
+\include{Verzeichnisse/anhang}
+
 
 % Literaturverzeichnis
-\printbibliography
+\printbibliography[title=Literaturverzeichnis]
 
 \end{document}
