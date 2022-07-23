@@ -36,8 +36,7 @@
 \xpretobibmacro{author}{\begingroup\bfseries}{}{}
 \xapptobibmacro{author}{\endgroup}
 % Doppelpunkt und Leerzeichen nach Autor
-\renewcommand*{\labelnamepunct}{\addspace in\addcolon\addspace} 
-% Punkt am Ende entfernen
+\renewcommand*{\labelnamepunct}{\addspace in\addcolon\addspace} % Punkt am Ende entfernen
 \renewcommand*{\finentrypunct}{\addspace}
 % Komma zwischen einzelnen Einträgen
 \renewcommand*{\newunitpunct}{\addcomma\addspace}
@@ -52,16 +51,18 @@
 \renewcommand*{\finalnamedelim}{\addsemicolon\space}
 %Komma zwischen Autor und jahr in Fußnote
 \renewcommand*{\nameyeardelim}{\addcomma\space}
+%URL ohne Vorgestelltes "URL:"
+\DeclareFieldFormat{url}{\addspace\url{#1}}
+%number in Runden KLammern
+\DeclareFieldFormat{number}{\mkbibparens{#1}}
+%URL-Trennung
+\apptocmd{\UrlBreaks}{\do\f\do\m}{}{}
+\setcounter{biburllcpenalty}{9000}% Kleinbuchstaben
+\setcounter{biburlucpenalty}{9000}% Großbuchstaben
+\setcounter{biburlnumpenalty}{9000}%Zahlen
+%keine Kursive Schrift für Titel im Lit.-Verzeichnis
+\DeclareFieldFormat*{title}{#1}
 
-%Tabelleneinstellungen:
-%Linienstärke
-\setlength{\arrayrulewidth}{0.4mm}
-%Schriftgröße
-\setlength{\tabcolsep}{12pt}
-%Spaltendicke
-\renewcommand{\arraystretch}{1.1}
-%Lininefarbe
-%\arrayrulecolor[HTML]{DB5800}
 
 
 %Einstellung für pdf-Dokumente, die Übernommen werden, auf Überlappung achten!
