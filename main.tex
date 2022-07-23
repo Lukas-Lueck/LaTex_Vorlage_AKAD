@@ -1,5 +1,5 @@
 % in Anlehnung an https://github.com/derdanu/akad-vorlage
-% Autor: TheFreakyL
+% Autor: Lukas Lück
 %-------------------------------------------
 % Vorgaben Assignment aus Studienheft SQL301
 %-------------------------------------------
@@ -19,7 +19,7 @@
 % Textteil, Nummerierung in arabisch, beginnen mit "1"
 % Anhang -> Literaturverzeichnis, Nummerierung in Römisch, folgend auf Römische Nummerierung von Verzeichnissen
 
-\documentclass[listof=totoc, bibliography=totoc, a4paper, 12pt]{scrartcl}
+\documentclass[listof=totoc, bibliography=totoc, a4paper, 12pt, numbers=noenddot]{scrartcl}
 \usepackage[ngerman]{babel}
 \usepackage{epsfig}
 \usepackage{times}
@@ -37,40 +37,38 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
-
-%\usepackage{graphicx}
+\fancyheadoffset{0pt}% <- added
+\usepackage{lastpage}
+\usepackage{etoolbox}
+\usepackage{hyphenat} %Silbentrennung für einzelne Wörter verhindern mit \nohyphens{text}
 \usepackage{float} % Notwendig fuer figure[h]
 \usepackage[printonlyused]{acronym}
 \usepackage{multicol} % für zweispaltiges Deckblatt
 \usepackage{microtype}%"entspanntere" Umbrüche
 % Pakete für Literatur + zitieren, authoryear-ibid
-\usepackage[backend=biber, style=authoryear-ibid, autocite=footnote, maxnames=10, dashed=false]{biblatex} %maxnames: Maximale anzieg im Verzeichnis, danach u.a.; dashed: bei gleichen Autoren würde bei true beim zweiten Eintrag ein"-" erschienen anstelle des Autors
+\usepackage[backend=biber, style=authoryear-ibid, autocite=footnote, maxnames=4, ibidpage=true, dashed=false]{biblatex} %maxnames: Maximale anzieg im Verzeichnis, danach u.a.; dashed: bei gleichen Autoren würde bei true beim zweiten Eintrag ein"-" erschienen anstelle des Autors
 \usepackage{csquotes}
 \usepackage{xpatch}
 \addbibresource{Literatur/literatur.bib}
 
-\usepackage[table]{xcolor}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage[font=normalsize]{caption}
+\usepackage{graphicx}
+\usepackage{vcell}
+\usepackage{colortbl}
+\usepackage{hhline}
+%Bei Tabellen mit anderer Schriftgröße wird Index in normaler Schriftgröße angezeigt
+%\usepackage{pgfplotstable} %Tabellen transponieren
 
-\usepackage{pdfpages}%Einbinden vpn pdf-Dateien
-\include{einstellungen}
-
-
-%% Für Codeblöcke mit Syntax-Highlighting
-%% http://www.ctan.org/tex-archive/macros/latex/contrib/minted/
-%Einkommentieren fuer Minted Syntax Highlighting
-\usepackage{minted}
-\definecolor{bg}{rgb}{0.95,0.95,0.95}
-
-% Paket für Verlinkungen im pdf-Dokument/ Einstellung für pdf-Dokument (z.B. Literaturverzeichnis, URLs, Email,...)
+%\usepackage{pdfpages}%Einbinden vpn pdf-Dateien
+\input{einstellungen}
 \usepackage[
-%---------------------------------------------------------
-% optional, Metadaten der .pdf
 pdftitle={\titel},
-pdfsubject={Assignment zum Modul REG23},
+pdfsubject={Assignment zum Modul AUT21},
 pdfauthor={\name},
-pdfkeywords={Akad, Assignment, REG23, SPS, CODESYS},
-%---------------------------------------------------------
-%pdfborderstyle={/S/U/W 1}, % Links unterstrichen
+pdfkeywords={Akad, Assignment, AUT21, Piezo-Sensoren, Wirbelfrequenzzähler},
 pdfborder={0 0 0},  % Links nicht sichtbar im pdf
 colorlinks = false,
 pdfpagelabels,
@@ -83,7 +81,7 @@ hypertexnames = false,
 urlcolor = black,
 citecolor = black] {hyperref}
 
-
+\input{urls}
 
 \newcounter{savepage} % Zähler für Seitenzahl, für später ab Römischer Nummerierung
 %--------------------------------------------------------------------------------------------------------------------------------
@@ -92,7 +90,7 @@ citecolor = black] {hyperref}
 \begin{document}
 
 % Deckblatt
-\include{Text/deckblatt}
+\include{Text/01_deckblatt}
 
 \newgeometry{left=45mm, right=20mm, top=30mm, bottom=30mm}
 
@@ -104,8 +102,10 @@ citecolor = black] {hyperref}
 \renewcommand{\headrulewidth}{1pt}
 \fancyhead{}
 \fancyfoot{}
-
+\pagenumbering{Roman}
+\setcounter{page}{2}
 % Inhaltsverzeichnis
+\pdfbookmark{\contentsname}{toc}
 \tableofcontents 
 \newpage
 
@@ -129,8 +129,8 @@ citecolor = black] {hyperref}
 \newpage
 
 % Abkürzungsverzeichnis
-\include{Verzeichnisse/abkuerzungen}
-\newpage
+%\include{Verzeichnisse/abkuerzungen}
+%\newpage
 
 % Formelverzeichnis
 %\listof{Formel}{Formelübersicht}
@@ -152,16 +152,17 @@ citecolor = black] {hyperref}
 %-------------------------------------------------------------------------------------------------------------------
 % Einleitung
 \sloppy%Leerräume dürfen gedehnt werden
-\include{Text/einleitung}
+\pdfbookmark{Kapitel}{kapitel}
+\include{Text/02_einleitung}
 
 % Grundlagen
-\include{Text/grundlagen}
+\include{Text/03_grundlagen}
 
 % Hauppteil
-\include{Text/hauptteil}
+\include{Text/04_hauptteil}
 
 % Schluss
-\include{Text/schluss}
+\include{Text/05_schluss}
 \end{spacing}
 
 % ab hier Römisch, folgend auf Verzeichnisse
@@ -169,10 +170,13 @@ citecolor = black] {hyperref}
 \setcounter{page}{\value{savepage}}
 
 % Anhang, bei Nichtbedarf auskommentieren
-\include{Verzeichnisse/anhang}
+%\include{Verzeichnisse/anhang}
 
 
 % Literaturverzeichnis
-\printbibliography[title=Literaturverzeichnis]
+\pdfbookmark{Literaturverzeichnis}{literaturverzeichnis}
+\printbibliography[notkeyword=Bilder, notkeyword=Teile, title=Literaturverzeichnis]
+%\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
+%\printbibliography[keyword=Teile, heading=subbibliography, title={Nachweis Teileliste}]
 
 \end{document}
