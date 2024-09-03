@@ -1,39 +1,39 @@
+% Festlegung der Seitenränder
 \newgeometry{left=20mm, right=20mm, top=30mm, bottom=30mm}
 \thispagestyle{empty}
-{\centering
-\vspace*{\fill}
-\Huge{\textbf{\assi}}
+{
+    % Zentrieren der gesamten Seite
+    \centering
+    
+    % Abstand von oben
+    \vspace*{3cm}
+    % Titel der Arbeit
+    {\Huge\textbf{\docType}}\\
+    \vspace*{2cm}
+    {\Huge{\docTitle}}\\
+    \vspace*{1cm}
+    {\Large{\betreff}}\\
+    \vspace*{2cm}
 
-\vspace{\baselineskip}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{ll|ll}
+            Name, Vorname:       & \name                        & Studiengang: & \studiFieldOne  \\
+            Immatrikualtionsnr.: & \immanr                      &              & \studiFieldTwo  \\
+            Adresse:             & \strasse                     & Modul        & \modul          \\
+                                 & \plzort                      & Abgabe am:   & \finalDate      \\
+            E-Mail               & \href{mailto:\mail}{\mail}   & Dozent       & \dozent                  
+        \end{tabular}
+    \end{table}
+    
+    % Abstand von unten
+    \vfill
+    
+    % Institution
+    \includegraphics[scale=0.35]{Ressources/Bilder/akad_logo.png}\par
+}
 
-\Huge{\titel}
-\vspace{\baselineskip} \\
-\Large{\betreff}
 
-\vspace{\baselineskip}
 
-\begin{multicols}{2}
-\raggedright
-\setlength{\columnseprule}{1pt}
-\begin{small}
 
-Name, Vorname: \tabto{40mm} \name \\
-Immatrikulationsnr.:  \tabto{40mm} \immanr \\
-Adresse: \tabto{40mm} \strasse \\
-\tabto{40mm} \plzort \\
-E-Mail: \tabto{40mm} \email
-
-\columnbreak
-
-Studiengang:  \tabto{40mm} \stud \\
-Modul:  \tabto{40mm} \modul \\
-Abgabe am:  \tabto{40mm} \today \\
-Dozent:  \tabto{40mm} \dozent
-
-\end{small}
-\end{multicols}{}
-
-\vfill\vfill
-
-\includegraphics[scale=0.35]{Bilder/akad_logo.png}\par}
 

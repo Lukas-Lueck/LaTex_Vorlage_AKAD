@@ -1,0 +1,69 @@
+%Einstellugnen für das Dokument, zum Beipiel Formatierung für Verzeichnisse
+
+%Abbildungsverzeichnis
+\makeatletter\renewcommand*{\@pnumwidth}{4em}\makeatother
+\makeatletter\renewcommand*{\@tocrmarg}{5em}\makeatother
+\makeatletter\renewcommand*{\@dotsep }{1}\makeatother
+
+% URL in gleicher Schriftart wie Rest
+\urlstyle{same}
+% Email mit Verlinkung
+\newcommand*{\email}{\href{mailto:lukas.lueck@stud.akad.de}{lukas.lueck@stud.akad.de}} 
+
+%kein einrücken nach Abbildung/Tabelle
+\setlength{\parindent}{0pt}
+
+% Formatierungen für das Literaturverzeichnis
+%--------------------------------------------
+\xpretobibmacro{author}{\begingroup\bfseries}{}{}
+\xapptobibmacro{author}{\endgroup}
+% Doppelpunkt und Leerzeichen nach Autor
+\renewcommand*{\labelnamepunct}{\addspace in\addcolon\addspace} % Punkt am Ende entfernen
+\renewcommand*{\finentrypunct}{\addspace}
+% Komma zwischen einzelnen Einträgen
+\renewcommand*{\newunitpunct}{\addcomma\addspace}
+% Punkt am Ende von Zitaten entfernen
+\renewcommand*{\bibfootnotewrapper}[1]{\bibsentence#1\addspace}
+% Zeilenabstand zwischen einzelnen Einträgen
+\setlength{\bibitemsep}{0.5\baselineskip}
+%Sortierung bei mehreren Autoren im Format: Name, Vorname
+\DeclareNameAlias{sortname}{family-given}
+%Trennung zwischen einzelnen Namen mit Semikolon
+\renewcommand*{\multinamedelim}{\addsemicolon\space}
+\renewcommand*{\finalnamedelim}{\addsemicolon\space}
+%Komma zwischen Autor und jahr in Fußnote
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+%URL ohne Vorgestelltes "URL:"
+\DeclareFieldFormat{url}{\addspace\url{#1}}
+%number in Runden KLammern
+\DeclareFieldFormat{number}{\mkbibparens{#1}}
+%URL-Trennung
+\apptocmd{\UrlBreaks}{\do\f\do\m}{}{}
+\setcounter{biburllcpenalty}{9000}% Kleinbuchstaben
+\setcounter{biburlucpenalty}{9000}% Großbuchstaben
+\setcounter{biburlnumpenalty}{9000}%Zahlen
+%keine Kursive Schrift für Titel im Lit.-Verzeichnis
+\DeclareFieldFormat*{title}{#1}
+
+
+%ABS-WErte mit Skalierten Betragsstrichen
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the 
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+%Farbeinstellung für minted, Matlab
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+
+%Einstellung für pdf-Dokumente, die Übernommen werden, auf Überlappung achten!
+%\includepdfset{width=\paperwidth, height=\paperheight, pagecommand={\thispagestyle{fancy}}}
+

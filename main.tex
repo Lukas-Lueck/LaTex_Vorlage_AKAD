@@ -18,57 +18,79 @@
 % Inhaltsverzeichnis (ohne Nummerierung) -> Abbildungsverzeichnis (Nummerierung in Römisch, beginnend mit "III")-> Tabellenverzeichnis -> Abk.-Verzeichniss
 % Textteil, Nummerierung in arabisch, beginnen mit "1"
 % Anhang -> Literaturverzeichnis, Nummerierung in Römisch, folgend auf Römische Nummerierung von Verzeichnissen
-
 \documentclass[listof=totoc, bibliography=totoc, a4paper, 12pt, numbers=noenddot]{scrartcl}
-\usepackage[ngerman]{babel}
-\usepackage{epsfig}
-\usepackage{times}
-\usepackage{tabto}
-\usepackage{wrapfig}
-\usepackage{multirow}
-\usepackage[onehalfspacing]{setspace}
-\usepackage{listings}
-\usepackage{mathptmx}
-\usepackage{geometry}
-\usepackage{helvet}
-\usepackage{courier}
-\usepackage{setspace}
-\usepackage{textcomp}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{fancyhdr}
-\fancyheadoffset{0pt}% <- added
-\usepackage{lastpage}
-\usepackage{etoolbox}
-\usepackage{hyphenat} %Silbentrennung für einzelne Wörter verhindern mit \nohyphens{text}
-\usepackage{float} % Notwendig fuer figure[h]
-\usepackage[printonlyused]{acronym}
-\usepackage{multicol} % für zweispaltiges Deckblatt
-\usepackage{microtype}%"entspanntere" Umbrüche
-% Pakete für Literatur + zitieren, authoryear-ibid
-\usepackage[backend=biber, style=authoryear-ibid, autocite=footnote, maxnames=4, ibidpage=true, dashed=false]{biblatex} %maxnames: Maximale anzieg im Verzeichnis, danach u.a.; dashed: bei gleichen Autoren würde bei true beim zweiten Eintrag ein"-" erschienen anstelle des Autors
-\usepackage{csquotes}
-\usepackage{xpatch}
-\addbibresource{Literatur/literatur.bib}
+\usepackage[ngerman]{babel} % Sprachpaket
+\usepackage{newtxtext,newtxmath} % Konsistente Text- und Mathematikschrift
+\usepackage[onehalfspacing]{setspace} % Zeilenabstand
+\usepackage[]{geometry} % Für Anpassung Seitenränder
+\usepackage[T1]{fontenc} % Bessere Trennung (kann entfernt werden, wenn nicht benötigt)
+\usepackage[utf8]{inputenc} % UTF-8 Unterstützung (kann entfernt werden, wenn nicht benötigt)
+\usepackage{microtype} % "Entspanntere" Umbrüche
 
-\usepackage[table,xcdraw]{xcolor}
+% Pakete für Tabellen
+\usepackage{multirow}
 \usepackage{longtable}
-\usepackage{lscape}
-\usepackage[font=normalsize]{caption}
-\usepackage{graphicx}
 \usepackage{vcell}
 \usepackage{colortbl}
 \usepackage{hhline}
-%Bei Tabellen mit anderer Schriftgröße wird Index in normaler Schriftgröße angezeigt
-%\usepackage{pgfplotstable} %Tabellen transponieren
+\usepackage{float} % Notwendig für figure[h]
+\usepackage[table]{xcolor}
 
-%\usepackage{pdfpages}%Einbinden vpn pdf-Dateien
-\input{einstellungen}
+% Pakete für Mathematik
+\usepackage{amsmath} % Erweiterte mathematische Funktionen
+\usepackage{mathtools} % Erweiterung für amsmath
+\usepackage{amsfonts} % Zahlenmengen Zeichen
+\usepackage{bm} % unterstützt bold in Formeln
+
+% Pakete für Grafiken und Beschriftungen
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage[export]{adjustbox}
+
+% Pakete für Kopf- und Fußzeilen
+\usepackage[headsepline=1pt,plainheadsepline, singlespacing=true]{scrlayer-scrpage}         % Erstellung von selbst definierten Kopfzeilen
+\clearpairofpagestyles%\clearscrheadfoot veraltet
+\ohead*{\pagemark}
+\ihead{\headmark}
+\setkomafont{pageheadfoot}{\normalfont}
+
+% Pakete für PDFs
+\usepackage{pdfpages} % Einbinden von PDF-Dateien
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{lscape}
+
+% Paket für Abkürzungsverzeichnis
+\usepackage{acro}
+\acsetup{make-links} % Setup linking with hyperref
+
+% Weitere Einstellungen
+\usepackage{url}
+\usepackage[stable]{footmisc}
+%\usepackage{tocloft} %Zeilenabstand in Verzeichnissen anpassen
+%\usepackage{hyphenat} %Silbentrennung für einzelne Wörter verhindern mit \nohyphens{text}
+
+% Pakete für Literatur + zitieren, authoryear-ibid
+\usepackage[backend=biber, style=authoryear-ibid, autocite=footnote, maxnames=4, ibidpage=true, dashed=false]{biblatex}
+\addbibresource{Verzeichnisse/literatur.bib}
+\usepackage{csquotes} % für Zitate
+
+%% Für Codeblöcke mit Syntax-Highlighting
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/minted/
+%% Einkommentieren fuer Minted Syntax Highlighting
+%\usepackage{minted}
+%\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\input{parameter}
+
+%\input{Einstellungen/arduinoLanguage}
+%\input{Einstellungen/highlighting}
 \usepackage[
-pdftitle={\titel},
-pdfsubject={Assignment zum Modul AUT21},
+pdftitle={\docTitle},
+pdfsubject={\pdfDescription},
 pdfauthor={\name},
-pdfkeywords={Akad, Assignment, AUT21, Piezo-Sensoren, Wirbelfrequenzzähler},
+pdfkeywords={\pdfKeyWords},
 pdfborder={0 0 0},  % Links nicht sichtbar im pdf
 colorlinks = false,
 pdfpagelabels,
@@ -81,102 +103,88 @@ hypertexnames = false,
 urlcolor = black,
 citecolor = black] {hyperref}
 
-\input{urls}
-
-\newcounter{savepage} % Zähler für Seitenzahl, für später ab Römischer Nummerierung
+\input{Einstellungen/einstellungen}
+\input{Verzeichnisse/abkuerzungen}
+\input{Verzeichnisse/urls}
 %--------------------------------------------------------------------------------------------------------------------------------
 %                                       Dokument begin
 %--------------------------------------------------------------------------------------------------------------------------------
+\newcounter{savepage} % Zähler für Seitenzahl, für später ab Römischer Nummerierung
 \begin{document}
+    %--------------------------------------------------------------------------------------------------------------------------------
+    %                                       Deckblatt
+    %--------------------------------------------------------------------------------------------------------------------------------
+    \include{Text/01_deckblatt}
+    \newgeometry{left=45mm, right=20mm, top=30mm, bottom=30mm}
 
-% Deckblatt
-\include{Text/01_deckblatt}
+    %--------------------------------------------------------------------------------------------------------------------------------
+    %                                       Verzeichnisse
+    %--------------------------------------------------------------------------------------------------------------------------------
+    \begin{spacing}{1.0} % Verzeichnisse werden mit einzeiligem Abstand gesetzt
 
-\newgeometry{left=45mm, right=20mm, top=30mm, bottom=30mm}
-
-\begin{spacing}{1.0} % Verzeichnisse werden mit einzeiligem Abstand gesetzt
-
-% Inhaltsverzeichnis ohne Nummerierung
-\pagestyle{fancy}
-\fancyhead{}
-\renewcommand{\headrulewidth}{1pt}
-\fancyhead{}
-\fancyfoot{}
-\pagenumbering{Roman}
-\setcounter{page}{2}
-% Inhaltsverzeichnis
-\pdfbookmark{\contentsname}{toc}
-\tableofcontents 
-\newpage
-
-% ab hier Nummerierung oben in Römisch, beginnend mit 3
-\pagestyle{fancy}
-\fancyhead{}
-\renewcommand{\headrulewidth}{1pt}
-\fancyhead[R]{\thepage}
-\fancyfoot{}
-\pagenumbering{Roman}
-\setcounter{page}{3}
-
-% bei Nichtbedarf entsprechende Zeile Auskommentieren:
-
-% Abbildungsverzeichnis, 
-\listoffigures 
-\newpage
-
-% Tabellenverzeichnis
-\listoftables 
-\newpage
-
-% Abkürzungsverzeichnis
-%\include{Verzeichnisse/abkuerzungen}
-%\newpage
-
-% Formelverzeichnis
-%\listof{Formel}{Formelübersicht}
-\setcounter{savepage}{\value{page}} %speichert Seitenzahl für spätere folgende Römische Nummerierung
-\end{spacing} 
-
-
-% ab hier Nummerierung oben in arabisch, beginngend mit 1
-\pagestyle{fancy}
-\fancyhead{}
-\renewcommand{\headrulewidth}{1pt}
-\fancyhead[R]{\thepage}
-\fancyfoot{}
-\pagenumbering{arabic}
-
-\begin{spacing}{1.5} % Zeilenabstand: 1,5 fuer den Textteil
-%-------------------------------------------------------------------------------------------------------------------
-%                     Ab hier der eigentliche Textteil
-%-------------------------------------------------------------------------------------------------------------------
-% Einleitung
-\sloppy%Leerräume dürfen gedehnt werden
-\pdfbookmark{Kapitel}{kapitel}
-\include{Text/02_einleitung}
-
-% Grundlagen
-\include{Text/03_grundlagen}
-
-% Hauppteil
-\include{Text/04_hauptteil}
-
-% Schluss
-\include{Text/05_schluss}
-\end{spacing}
-
-% ab hier Römisch, folgend auf Verzeichnisse
-\pagenumbering{Roman}
-\setcounter{page}{\value{savepage}}
-
-% Anhang, bei Nichtbedarf auskommentieren
-%\include{Verzeichnisse/anhang}
-
-
-% Literaturverzeichnis
-\pdfbookmark{Literaturverzeichnis}{literaturverzeichnis}
-\printbibliography[notkeyword=Bilder, notkeyword=Teile, title=Literaturverzeichnis]
-%\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
-%\printbibliography[keyword=Teile, heading=subbibliography, title={Nachweis Teileliste}]
-
+        % Inhaltsverzeichnis ohne Nummerierung
+        %\pagestyle{ContentHeaderStyle} % Neuen Seitenstil anwenden
+        % Inhaltsverzeichnis
+        \thispagestyle{empty}
+        \pdfbookmark{\contentsname}{toc}
+        \tableofcontents 
+        \newpage
+        
+        % ab hier Nummerierung oben in Römisch, beginnend mit 3
+        \pagenumbering{Roman}
+        \setcounter{page}{3}
+        % Abbildungsverzeichnis, 
+        \listoffigures 
+        \newpage
+        
+        % Tabellenverzeichnis
+        \listoftables 
+        \newpage
+        
+        % Abkürzungsverzeichnis
+        \addcontentsline{toc}{section}{Abkürzungsverzeichnis}
+        \printacronyms[heading=section*, name=Abkürzungsverzeichnis, template=tabular]
+        \newpage
+        
+        % Formelverzeichnis
+        %\listof{Formel}{Formelübersicht}
+        \setcounter{savepage}{\value{page}} %speichert Seitenzahl für spätere folgende Römische Nummerierung
+    \end{spacing} 
+    %-------------------------------------------------------------------------------------------------------------------
+    %                     Ab hier der eigentliche Textteil
+    %-------------------------------------------------------------------------------------------------------------------
+    % ab hier Nummerierung oben in arabisch, beginngend mit 1
+    \pagenumbering{Roman}
+    \setcounter{page}{3}
+    \pagenumbering{arabic}
+    \begin{spacing}{1.5} % Zeilenabstand: 1,5 fuer den Textteil
+    
+        % Einleitung
+        \sloppy%Leerräume dürfen gedehnt werden
+        \pdfbookmark{Kapitel}{kapitel}
+        \include{Text/02_einleitung}
+        
+        % Grundlagen
+        \include{Text/03_grundlagen}
+        
+        % Hauppteil
+        \include{Text/04_hauptteil}
+        
+        % Schluss
+        \include{Text/06_schluss}
+    \end{spacing}
+    %-------------------------------------------------------------------------------------------------------------------
+    %                     Literaturverzeichnis + Anhang
+    %-------------------------------------------------------------------------------------------------------------------
+    % ab hier Römisch, folgend auf Verzeichnisse
+    \pagenumbering{Roman}
+    \setcounter{page}{\value{savepage}}
+    
+    % Anhang, bei Nichtbedarf auskommentieren
+    \include{Verzeichnisse/anhang}
+    
+    % Literaturverzeichnis
+    \printbibliography[title=Literaturverzeichnis]
+    %\printbibliography[keyword=Bilder, heading=subbibliography, title={Bildernachweis}]
+    %\printbibliography[keyword=Teile, heading=subbibliography, title={Nachweis Teileliste}]
 \end{document}

@@ -1,18 +1,27 @@
+\newgeometry{left=30mm, right=10mm, top=30mm, bottom=20mm}
+%Original: \newgeometry{left=45mm, right=20mm, top=30mm, bottom=30mm, landscape}
+
 \section*{Anhang}
 \addcontentsline{toc}{section}{Anhang}
 \renewcommand{\thesubsection}{\Alph{subsection}}
+%Begin Anhang
+\subsection{Shared-Memory-API} \label{anhang:sharedMemApi}
 
-\subsection{Programmablaufplan\label{anhang:pap}}
-\begin{figure}[H]
-   \centering
-    \includegraphics[scale=0.5]{Bilder/Flow_Chart_Bohrvorrichtung.png}
-    \caption[gesamter Programmablaufplan]{Programmablaufplan des automatischen Bohrvorgangs (eigener Entwurf)}
-    \label{fig:Ablaufplan}
-\end{figure}
-\clearpage
 
-\includepdf[pages=1, trim=0mm 80mm 20mm 0mm, pagecommand={\subsection{PLC\_PRG}\label{anhang:Plc_prg}}]{Bilder/PLC_PRG.pdf}
-\includepdf[pages=2-3]{Bilder/PLC_PRG.pdf}
+\begin{landscape}
+\subsection{Fehleruntersuchung}\label{anhang:error_analysis}
+    %\input{Tabellen/error_analysis}
+\end{landscape}
 
-%\clearpage
+                    
 
+%[frame=leftline,  fontsize=\scriptsize, breaklines=true, linenos, ]
+
+    
+
+
+
+
+
+
+   
